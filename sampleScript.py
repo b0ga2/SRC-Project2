@@ -6,11 +6,11 @@ import dns.reversename
 import geoip2.database
 import matplotlib.pyplot as plt 
 
-datafile='data0.parquet'
+datafile='dataset0/data0.parquet'
 
 ### IP geolocalization
-geoCC=geoip2.database.Reader('GeoLite2-Country.mmdb')
-geoASN=geoip2.database.Reader('GeoLite2-ASN.mmdb')
+geoCC=geoip2.database.Reader('GeoLite2/GeoLite2-Country.mmdb')
+geoASN=geoip2.database.Reader('GeoLite2/GeoLite2-ASN.mmdb')
 addr='193.136.73.21'
 cc=geoCC.country('193.136.176.1').country.iso_code
 org=geoASN.asn('193.136.176.1').autonomous_system_organization
