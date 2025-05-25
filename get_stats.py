@@ -41,3 +41,5 @@ print(up_down_ratio.sort_values(by='ratio', ascending=False))
 print("mean:", (down_bytes / up_bytes).mean())
 print("std:", (down_bytes / up_bytes).std())
 print("CCs: ", unique_ccs)
+
+
