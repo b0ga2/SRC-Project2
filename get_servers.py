@@ -19,7 +19,6 @@ print(up_down_ratio.sort_values(by='ratio', ascending=False))
 print((down_bytes / up_bytes).mean())
 
 ### Another approach
-
 NET = ipaddress.IPv4Network('200.0.0.0/24')
 bpublic = data.apply(lambda x: ipaddress.IPv4Address(x['dst_ip']) in NET, axis=1)
 bpublicDF = bpublic.to_frame(name='dst_public')
