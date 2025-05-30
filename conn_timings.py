@@ -18,8 +18,7 @@ std = timestamp.std()
 print("mean timestamp:", mean)
 print("std timestamp:", std)
 
-# TODO:
-# this gives us a 'mean' and 'std' that do not cover the entire range for the 'good' actors
+# TODO: this gives us a 'mean' and 'std' that do not cover the entire range for the 'good' actors
 # meaning that we would have false positives (is this accepted?)
 # print(timestamp)
 

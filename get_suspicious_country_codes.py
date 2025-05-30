@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 
 datafile = 'dataset6/test6.parquet'
 
+#TODO: Verify the flow in the normal days versus the anomalous ways per country
+
 def get_cc(ip):
     try: return geoCC.country(ip).country.iso_code
     except: return None
