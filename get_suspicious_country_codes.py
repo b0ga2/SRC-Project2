@@ -3,6 +3,8 @@ import geoip2.database
 
 datafile = 'dataset6/data6.parquet'
 
+#TODO: Verify the flow in the normal days versus the anomalous ways per country
+
 def get_cc(ip):
     try: return geoCC.country(ip).country.iso_code
     except: return None
