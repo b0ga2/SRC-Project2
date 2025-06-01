@@ -1,10 +1,5 @@
 import pandas as pd
-import numpy as np
 import ipaddress
-import dns.resolver
-import dns.reversename
-import geoip2.database
-import matplotlib.pyplot as plt 
 
 datafile = 'dataset6/data6.parquet'
 

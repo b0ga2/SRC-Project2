@@ -1,12 +1,7 @@
 import pandas as pd
-import numpy as np
-import ipaddress
-import dns.resolver
-import dns.reversename
 import geoip2.database
-import matplotlib.pyplot as plt 
 
-datafile = 'dataset6/test6.parquet'
+datafile = 'dataset6/data6.parquet'
 
 def get_cc(ip):
     try: return geoCC.country(ip).country.iso_code
@@ -33,10 +28,12 @@ unique_ccs = set(newdata['cc'])
 if None in unique_ccs:
     unique_ccs.remove(None)
 
-#print(newdata)
+# print(newdata)
 
 cc = newdata.loc[newdata['cc'] != None].groupby(['cc'])['dst_ip'].unique()
 print(cc)
+
+# TODO: check data.parquet for the number of connections to each country
 
 ## Country codes to exclude
 ips_per_cc_dict = newdata.loc[newdata['cc'].notna()].groupby('cc')['dst_ip'].unique().apply(list).to_dict()

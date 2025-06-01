@@ -14,11 +14,15 @@ ratio = pd.DataFrame(port443 / port53, columns=['ratio'])
 up_down_ratio = pd.concat([port443, port53, ratio], axis=1)
 
 mean = (port443 / port53).mean()
-std = (port443 / port53).std()
+std  = (port443 / port53).std()
+minn = (port443 / port53).min()
+maxx = (port443 / port53).max()
 
 print(up_down_ratio)
 print("Mean: ", mean)
 print("Std: ", std)
+print("min: ", minn)
+print("max: ", maxx)
 
 datafile = 'dataset6/test6.parquet'
 
@@ -32,9 +36,10 @@ ratio = pd.DataFrame(port443/ port53, columns=['ratio'])
 up_down_ratio = pd.concat([port443, port53, ratio], axis=1)
 
 print(up_down_ratio)
-print("Mean: ",(port443/ port53).mean())
-print("Std: ",(port443/ port53).std())
+print("Mean: ",(port443 / port53).mean())
+print("Std: ",(port443 / port53).std())
+print("min: ",(port443 / port53).min())
+print("max: ",(port443 / port53).max())
 
-# TODO: Probably adjust the value mean-std
-dns_exfiltration = up_down_ratio.loc[up_down_ratio["ratio"] < (mean-(std*2))]
+dns_exfiltration = up_down_ratio.loc[up_down_ratio["ratio"] < minn]
 print(dns_exfiltration)

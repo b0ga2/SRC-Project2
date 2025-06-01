@@ -14,14 +14,13 @@ data = pd.read_parquet(datafile)
 data['diff_timestamp'] = data.groupby(['src_ip'])['timestamp'].diff().fillna(0)
 timestamp = data.groupby(['src_ip'])['diff_timestamp'].mean().sort_values(ascending=False)
 mean = timestamp.mean()
-std = timestamp.std()
+std  = timestamp.std()
+minn = timestamp.min()
+maxx = timestamp.max()
 print("mean timestamp:", mean)
 print("std timestamp:", std)
-
-# TODO:
-# this gives us a 'mean' and 'std' that do not cover the entire range for the 'good' actors
-# meaning that we would have false positives (is this accepted?)
-# print(timestamp)
+print("min: ", minn)
+print("max: ", maxx)
 
 datafile = 'dataset6/servers6.parquet'
 
@@ -32,6 +31,12 @@ data['diff_timestamp'] = data.groupby(['src_ip'])['timestamp'].diff().fillna(0)
 timestamp = data.groupby(['src_ip'])['diff_timestamp'].mean().sort_values(ascending=False)
 print("mean timestamp:", (timestamp).mean())
 print("std timestamp:", (timestamp).std())
+print("min timestamp:", (timestamp).min())
+print("max timestamp:", (timestamp).max())
 
-weird_timings = data.loc[(data["diff_timestamp"] > (mean + std)) | (data["diff_timestamp"] < (mean - std))]
+# TODO: what do these values mean????
+
+# weird_timings = data.loc[(data["diff_timestamp"] > maxx) | (data["diff_timestamp"] < minn)] #.groupby(['src_ip'])['diff_timestamp'].mean().sort_values(ascending=False)
+weird_timings = data.groupby(['src_ip'])['diff_timestamp'].mean().sort_values(ascending=False)
+weird_timings = weird_timings.loc[(weird_timings > maxx) | (weird_timings < minn)]
 print(weird_timings)
