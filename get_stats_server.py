@@ -23,8 +23,10 @@ data = pd.read_parquet(datafile)
 geoCC = geoip2.database.Reader('GeoLite2/GeoLite2-Country.mmdb')
 geoASN = geoip2.database.Reader('GeoLite2/GeoLite2-ASN.mmdb')
 
-geo_loc_cc = data.apply(lambda x: get_cc(x['src_ip']), axis=1)
-geo_loc_asn = data.apply(lambda x: get_asn(x['src_ip']), axis=1)
+#TODO: Verify with teacher why does dst_ip returns Ecuador and no ASN, and if we use src_ip it gives PT and Digi
+geo_loc_cc = data.apply(lambda x: get_cc(x['dst_ip']), axis=1)
+geo_loc_asn = data.apply(lambda x: get_asn(x['dst_ip']), axis=1)
+
 geo_loc_cc_DF = geo_loc_cc.to_frame(name='cc')
 geo_loc_asn_DF = geo_loc_asn.to_frame(name='asn')
 newdata = pd.concat([data, geo_loc_cc_DF, geo_loc_asn_DF], axis=1)
@@ -32,6 +34,10 @@ newdata = pd.concat([data, geo_loc_cc_DF, geo_loc_asn_DF], axis=1)
 unique_ccs = set(newdata['cc'])
 if None in unique_ccs:
     unique_ccs.remove(None)
+
+unique_asn = set(newdata['asn'])
+if None in unique_asn:
+    unique_asn.remove(None)
 
 up_bytes = data.loc[(data['dst_ip'] == '200.0.0.11') | (data['dst_ip'] == "200.0.0.12")].groupby(['src_ip','dst_ip','port', 'proto'])['up_bytes'].sum().sort_values(ascending=False)
 down_bytes = data.loc[(data['dst_ip'] == '200.0.0.11') | (data['dst_ip'] == "200.0.0.12")].groupby(['src_ip','dst_ip','port', 'proto'])['down_bytes'].sum().sort_values(ascending=False)
@@ -45,3 +51,4 @@ print("std:", (down_bytes / up_bytes).std())
 print("mean timestamp:", (timestamp).mean())
 print("std timestamp:", (timestamp).std())
 print("CCs: ", unique_ccs)
+print("ASNs: ", unique_asn)
