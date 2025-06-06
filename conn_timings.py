@@ -28,7 +28,7 @@ print("std timestamp (servers):", (timestamp).std())
 print("min timestamp (servers):", (timestamp).min())
 print("max timestamp (servers):", (timestamp).max())
 
-# TODO: what do these values mean, like is 38 seconds a lot? And how much is too low?
+# TODO: Dont compare with data, work only with thte values in servers and compare the values
 
 weird_timings = data.groupby(['src_ip'])['diff_timestamp'].mean().sort_values(ascending=False)
 weird_timings = weird_timings.loc[(weird_timings > maxx) | (weird_timings < minn)]
