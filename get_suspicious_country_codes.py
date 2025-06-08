@@ -3,8 +3,6 @@ import geoip2.database
 
 datafile = 'dataset6/data6.parquet'
 
-#TODO: Verify the flow in the normal days versus the anomalous ways per country
-
 def get_cc(ip):
     try: return geoCC.country(ip).country.iso_code
     except: return None
@@ -26,14 +24,7 @@ geo_loc_cc_DF = geo_loc_cc.to_frame(name='cc')
 geo_loc_asn_DF = geo_loc_asn.to_frame(name='asn')
 newdata = pd.concat([data, geo_loc_cc_DF, geo_loc_asn_DF], axis=1)
 
-#unique_ccs = set(newdata['cc'])
-#if None in unique_ccs:
-#    unique_ccs.remove(None)
-
-# print(newdata)
-
 cc_safe = newdata.loc[newdata['cc'] != None].groupby(['cc'])['down_bytes'].count()
-#print(cc_safe)
 
 
 datafile = 'dataset6/test6.parquet'
@@ -51,25 +42,10 @@ geo_loc_cc_DF = geo_loc_cc.to_frame(name='cc')
 geo_loc_asn_DF = geo_loc_asn.to_frame(name='asn')
 newdata = pd.concat([data, geo_loc_cc_DF, geo_loc_asn_DF], axis=1)
 
-#unique_ccs = set(newdata['cc'])
-#if None in unique_ccs:
-#    unique_ccs.remove(None)
-
-# print(newdata)
-
 cc = newdata.loc[newdata['cc'] != None].groupby(['cc'])['up_bytes'].count()
-#print(cc)
+ratio = pd.DataFrame(cc / cc_safe, columns=['ratio'])
 
-finaldata = pd.concat([cc_safe,cc, cc/cc_safe], axis=1)
-print(finaldata)
-
-# TODO: check data.parquet for the number of connections to each country
-
-## Country codes to exclude
-#ips_per_cc_dict = newdata.loc[newdata['cc'].notna()].groupby('cc')['dst_ip'].unique().apply(list).to_dict()
-# print("RU: ", ips_per_cc_dict["RU"][:10])
-# print("CN: ", ips_per_cc_dict["CN"][:10])
-# print("IL: ", ips_per_cc_dict['IL'][:10])
-# print("BH: ", ips_per_cc_dict['BH'][:10])
-# print("IR: ", ips_per_cc_dict['IR'][:10])
-# print("KR: ", ips_per_cc_dict['KR'][:10])
+# concat and sort by ratio
+finaldata = pd.concat([cc_safe, cc, ratio], axis=1).sort_values(by='ratio', ascending=False)
+sus_countries = finaldata.loc[(finaldata["ratio"].isna() & (finaldata["up_bytes"] > 50)) | (finaldata["ratio"] > 2)]
+print(sus_countries)
