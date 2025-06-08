@@ -47,5 +47,6 @@ ratio = pd.DataFrame(cc / cc_safe, columns=['ratio'])
 
 # concat and sort by ratio
 finaldata = pd.concat([cc_safe, cc, ratio], axis=1).sort_values(by='ratio', ascending=False)
+print(finaldata)
 sus_countries = finaldata.loc[(finaldata["ratio"].isna() & (finaldata["up_bytes"] > 50)) | (finaldata["ratio"] > 2)]
 print(sus_countries)

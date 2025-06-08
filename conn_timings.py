@@ -13,21 +13,14 @@ std  = timestamp.std().to_frame(name='std')
 minn = timestamp.min().to_frame(name='min')
 maxx = timestamp.max().to_frame(name='max')
 
-FUCK = pd.concat([mean, std, minn, maxx], axis=1).sort_values(by="std", ascending=False)
-print(FUCK)
-print(timestamp.mean().std())
+table = pd.concat([mean, std, minn, maxx], axis=1).sort_values(by="std", ascending=False)
+print(table)
+print("STD - ",timestamp.mean().std())
+print("Max - ",timestamp.mean().max())
+
+# One way
 print(std.loc[std["std"] < timestamp.mean().std()])
+
+#Another way
 print(maxx.loc[maxx["max"] < timestamp.mean().max()])
-print("klsaljdklsajdklsajdklsajdkl")
-print(timestamp.count().sort_values(ascending=False))
 
-# print("\nmean timestamp (servers):", (timestamp).mean())
-# print("std timestamp (servers):", (timestamp).std())
-# print("min timestamp (servers):", (timestamp).min())
-# print("max timestamp (servers):", (timestamp).max())
-# 
-# TODO: Dont compare with data, work only with thte values in servers and compare the values
-
-# weird_timings = data.groupby(['src_ip'])['diff_timestamp'].mean().sort_values(ascending=True)
-# weird_timings = weird_timings.loc[(weird_timings > maxx) | (weird_timings < minn)]
-# print(weird_timings)
