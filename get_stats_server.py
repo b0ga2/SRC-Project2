@@ -6,7 +6,7 @@ import dns.reversename
 import geoip2.database
 import matplotlib.pyplot as plt 
 
-datafile = 'dataset6/servers6.parquet'
+datafile = 'dataset10/servers10.parquet'
 
 def get_cc(ip):
     try: return geoCC.country(ip).country.iso_code

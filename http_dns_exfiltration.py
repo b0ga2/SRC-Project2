@@ -1,6 +1,6 @@
 import pandas as pd
 
-datafile = 'dataset6/data6.parquet'
+datafile = 'dataset10/data10.parquet'
 
 ### Read parquet data files
 data = pd.read_parquet(datafile)
@@ -24,7 +24,7 @@ print("Std (data): ", std)
 print("min (data): ", minn)
 print("max (data): ", maxx)
 
-datafile = 'dataset6/test6.parquet'
+datafile = 'dataset10/test10.parquet'
 
 ### Read parquet data files
 data = pd.read_parquet(datafile)

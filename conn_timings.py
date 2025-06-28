@@ -1,6 +1,6 @@
 import pandas as pd
 
-datafile = 'dataset6/servers6.parquet'
+datafile = 'dataset10/servers10.parquet'
 
 ### Read parquet data files
 data = pd.read_parquet(datafile)

@@ -1,7 +1,7 @@
 import pandas as pd
 import geoip2.database
 
-datafile = 'dataset6/data6.parquet'
+datafile = 'dataset10/data10.parquet'
 
 def get_cc(ip):
     try: return geoCC.country(ip).country.iso_code
@@ -27,7 +27,7 @@ newdata = pd.concat([data, geo_loc_cc_DF, geo_loc_asn_DF], axis=1)
 cc_safe = newdata.loc[newdata['cc'] != None].groupby(['cc'])['down_bytes'].count()
 
 
-datafile = 'dataset6/test6.parquet'
+datafile = 'dataset10/test10.parquet'
 
 ### Read parquet data files
 data = pd.read_parquet(datafile)

@@ -6,7 +6,7 @@ import dns.reversename
 import geoip2.database
 import matplotlib.pyplot as plt 
 
-datafile = 'dataset6/servers6.parquet'
+datafile = 'dataset10/servers10.parquet'
 
 ### IP geolocalization
 geoCC = geoip2.database.Reader('GeoLite2/GeoLite2-Country.mmdb')
