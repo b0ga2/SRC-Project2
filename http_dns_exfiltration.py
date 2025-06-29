@@ -6,7 +6,7 @@ datafile = 'dataset10/data10.parquet'
 data = pd.read_parquet(datafile)
 
 # Number of connections
-port443 = data.loc[data['port'] == 443 ].groupby(['src_ip']).count()["up_bytes"]
+port443 = data.loc[data['port'] == 443].groupby(['src_ip']).count()["up_bytes"]
 port53 = data.loc[data['port'] == 53].groupby(['src_ip']).count()["down_bytes"]
 
 # Ratio of connections
@@ -41,5 +41,8 @@ print("Std (servers): ",(port443 / port53).std())
 print("min (servers): ",(port443 / port53).min())
 print("max (servers): ",(port443 / port53).max())
 
-dns_exfiltration = up_down_ratio.loc[up_down_ratio["ratio"] < minn]
-print(dns_exfiltration)
+dns_exfiltration = up_down_ratio.loc[(up_down_ratio["ratio"] < minn) & (up_down_ratio["ratio"] < 1)]
+cc = up_down_ratio.loc[(up_down_ratio["ratio"] < minn) & (up_down_ratio["ratio"] > 1)]
+
+print("\n\nDNS Exfiltration: \n",dns_exfiltration)
+print("\nC&C Activies: \n", cc)

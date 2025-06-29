@@ -21,6 +21,4 @@ print("Max - ",timestamp.mean().max())
 # One way
 print(std.loc[std["std"] < timestamp.mean().std()])
 
-#Another way
-print(maxx.loc[maxx["max"] < timestamp.mean().max()])
 

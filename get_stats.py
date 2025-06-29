@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import geoip2.database
-import matplotlib.pyplot as plt 
 
 def get_cc(ip):
     try: return geoCC.country(ip).country.iso_code
@@ -34,14 +33,29 @@ unique_asn = set(newdata['asn'])
 if None in unique_asn:
     unique_asn.remove(None)
 
-up_bytes = newdata.groupby(['src_ip'])['up_bytes'].sum().sort_values(ascending=False)
-down_bytes = newdata.groupby(['src_ip'])['down_bytes'].sum().sort_values(ascending=False)
-ratio = pd.DataFrame(down_bytes / up_bytes, columns=['ratio'])
-up_down_ratio = pd.concat([up_bytes, down_bytes, ratio], axis=1)
-print(up_down_ratio.sort_values(by='ratio', ascending=False))
-print("mean ratio:", (down_bytes / up_bytes).mean())
-print("std ratio:", (down_bytes / up_bytes).std())
-print("min ratio:", (down_bytes / up_bytes).min())
-print("max ratio:", (down_bytes / up_bytes).max())
+up_bytes_443 = newdata.loc[data['port'] == 443].groupby(['src_ip', 'port', 'proto'])['up_bytes'].sum().sort_values(ascending=False)
+up_bytes_53 = newdata.loc[data['port'] == 53].groupby(['src_ip', 'port', 'proto'])['up_bytes'].sum().sort_values(ascending=False)
+down_bytes_443 = newdata.loc[data['port'] == 443].groupby(['src_ip', 'port','proto'])['down_bytes'].sum().sort_values(ascending=False)
+down_bytes_53 = newdata.loc[data['port'] == 53].groupby(['src_ip', 'port','proto'])['down_bytes'].sum().sort_values(ascending=False)
+
+
+ratio_443 = pd.DataFrame(down_bytes_443 / up_bytes_443, columns=['ratio'])
+ratio_53 = pd.DataFrame(down_bytes_53 / up_bytes_53, columns=['ratio'])
+
+up_down_ratio_443 = pd.concat([up_bytes_443, down_bytes_443, ratio_443], axis=1)
+up_down_ratio_53 = pd.concat([up_bytes_53, down_bytes_53, ratio_53], axis=1)
+
+print(up_down_ratio_443.sort_values(by='ratio', ascending=False))
+print("mean ratio port 443:", (down_bytes_443 / up_bytes_443).mean())
+print("std ratio port 443:", (down_bytes_443 / up_bytes_443).std())
+print("min ratio port 443:", (down_bytes_443 / up_bytes_443).min())
+print("max ratio port 443:", (down_bytes_443 / up_bytes_443).max())
+
+print(up_down_ratio_53.sort_values(by='ratio', ascending=False))
+print("mean ratio port 53:", (down_bytes_53 / up_bytes_53).mean())
+print("std ratio port  53:", (down_bytes_53 / up_bytes_53).std())
+print("min ratio port  53:", (down_bytes_53 / up_bytes_53).min())
+print("max ratio port  53:", (down_bytes_53 / up_bytes_53).max())
+
 print("CCs: ", unique_ccs)
 print("ASNs: ", unique_asn)
