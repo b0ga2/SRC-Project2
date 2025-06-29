@@ -29,7 +29,7 @@ datafile = 'dataset10/test10.parquet'
 ### Read parquet data files
 data = pd.read_parquet(datafile)
 
-port443 = data.loc[data['port'] == 443 ].groupby(['src_ip']).count()["up_bytes"]
+port443 = data.loc[data['port'] == 443].groupby(['src_ip']).count()["up_bytes"]
 port53 = data.loc[data['port'] == 53].groupby(['src_ip']).count()["down_bytes"]
 
 ratio = pd.DataFrame(port443/ port53, columns=['ratio'])

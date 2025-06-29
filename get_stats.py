@@ -34,13 +34,14 @@ unique_asn = set(newdata['asn'])
 if None in unique_asn:
     unique_asn.remove(None)
 
-
 up_bytes = newdata.groupby(['src_ip'])['up_bytes'].sum().sort_values(ascending=False)
 down_bytes = newdata.groupby(['src_ip'])['down_bytes'].sum().sort_values(ascending=False)
 ratio = pd.DataFrame(down_bytes / up_bytes, columns=['ratio'])
 up_down_ratio = pd.concat([up_bytes, down_bytes, ratio], axis=1)
 print(up_down_ratio.sort_values(by='ratio', ascending=False))
-print("mean:", (down_bytes / up_bytes).mean())
-print("std:", (down_bytes / up_bytes).std())
+print("mean ratio:", (down_bytes / up_bytes).mean())
+print("std ratio:", (down_bytes / up_bytes).std())
+print("min ratio:", (down_bytes / up_bytes).min())
+print("max ratio:", (down_bytes / up_bytes).max())
 print("CCs: ", unique_ccs)
 print("ASNs: ", unique_asn)
