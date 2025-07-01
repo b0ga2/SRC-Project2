@@ -49,15 +49,6 @@ finaldata = pd.concat([cc_safe, cc, ratio], axis=1).sort_values(by='ratio', asce
 sus_countries = finaldata.loc[(finaldata["ratio"].isna() & (finaldata["up_bytes"] > 50)) | (finaldata["ratio"] > 2)]
 print(sus_countries)
 
-# sus_ccs = sus_countries.index.tolist()
-# # print(sus_ccs)
-# ips_by_cc = newdata[newdata['cc'].isin(sus_ccs)].groupby('cc')['dst_ip'].unique()
-# # print(ips_by_cc)
-# for cc, ip_list in ips_by_cc.items():
-#     print(f"{cc}: {len(ip_list)} IPs")
-#     for ip in ip_list:
-#         print(f"    {ip}")
-#      print()
 
 sus_ccs = sus_countries.index.tolist()
 rows_sus = newdata[newdata['cc'].isin(sus_ccs)]
