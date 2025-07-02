@@ -38,7 +38,6 @@ up_bytes_53 = newdata.loc[data['port'] == 53].groupby(['src_ip', 'port', 'proto'
 down_bytes_443 = newdata.loc[data['port'] == 443].groupby(['src_ip', 'port','proto'])['down_bytes'].sum().sort_values(ascending=False)
 down_bytes_53 = newdata.loc[data['port'] == 53].groupby(['src_ip', 'port','proto'])['down_bytes'].sum().sort_values(ascending=False)
 
-
 ratio_443 = pd.DataFrame(down_bytes_443 / up_bytes_443, columns=['ratio'])
 ratio_53 = pd.DataFrame(down_bytes_53 / up_bytes_53, columns=['ratio'])
 

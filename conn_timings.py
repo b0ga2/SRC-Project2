@@ -19,8 +19,4 @@ print("STD - ",timestamp.mean().std())
 print("Max - ",timestamp.mean().max())
 
 print("\nAnomalous Use:\n",std.loc[std["std"] < timestamp.mean().std()])
-
-#Another way
 print("\nAnother Approach:\n",maxx.loc[maxx["max"] < timestamp.mean().max()])
-
-

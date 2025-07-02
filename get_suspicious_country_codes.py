@@ -1,5 +1,5 @@
-import pandas as pd
 import geoip2.database
+import pandas as pd
 
 datafile = 'dataset10/data10.parquet'
 
@@ -48,7 +48,6 @@ ratio = pd.DataFrame(cc / cc_safe, columns=['ratio'])
 finaldata = pd.concat([cc_safe, cc, ratio], axis=1).sort_values(by='ratio', ascending=False)
 sus_countries = finaldata.loc[(finaldata["ratio"].isna() & (finaldata["up_bytes"] > 50)) | (finaldata["ratio"] > 2)]
 print(sus_countries)
-
 
 sus_ccs = sus_countries.index.tolist()
 rows_sus = newdata[newdata['cc'].isin(sus_ccs)]

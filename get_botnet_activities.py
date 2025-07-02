@@ -1,7 +1,5 @@
 import pandas as pd
 
-import pandas as pd
-
 datafile = 'dataset10/data10.parquet'
 
 ### Read parquet data files
